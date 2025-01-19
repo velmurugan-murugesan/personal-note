@@ -29,7 +29,9 @@ class ShoppingViewModel @Inject constructor(
         viewModelScope.launch {
             shoppingRepository.getAllShoppingItems().collect { routines ->
                 _shoppingUiState.value =
-                    _shoppingUiState.value.copy(shoppingItems = routines)
+                    _shoppingUiState.value.copy(shoppingItems = routines.sortedBy {
+                        it.isPurchased
+                    })
             }
         }
 
